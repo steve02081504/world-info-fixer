@@ -17,19 +17,20 @@
 		fileInput.addEventListener('change', handleFileSelect);
 
 		function handleFileSelect(event) {
-			const selectedFile = event.target.files[0];
-			const reader = new FileReader();
+			for (const selectedFile of event.target.files) {
+				const reader = new FileReader();
 
-			reader.onload = function (e) {
-				const fileContent = e.target.result;
-				let jsonData = JSON.parse(fileContent);
-				reRule(jsonData.entries);
-				jsonData = removeDuplicates(jsonData)
-				jsonData.entries = reIndex(jsonData.entries)
-				createDownloadLink(jsonData);
-			};
+				reader.onload = function (e) {
+					const fileContent = e.target.result;
+					let jsonData = JSON.parse(fileContent);
+					reRule(jsonData.entries);
+					jsonData = removeDuplicates(jsonData)
+					jsonData.entries = reIndex(jsonData.entries)
+					createDownloadLink(jsonData);
+				};
 
-			reader.readAsText(selectedFile);
+				reader.readAsText(selectedFile);
+			}
 		}
 
 		function reRule(data) {
